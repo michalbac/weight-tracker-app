@@ -16,6 +16,7 @@ import java.util.Optional;
 @Service
 public class WeightMeasureService {
     private static final Logger LOGGER = LoggerFactory.getLogger(WeightMeasureService.class);
+
     @Autowired
     WeightMeasureRepository weightMeasureRepository;
 

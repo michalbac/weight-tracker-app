@@ -1,9 +1,9 @@
 package com.michal.weighttrackerapp.repository;
 
-import com.michal.weighttrackerapp.domain.User;
+import com.michal.weighttrackerapp.domain.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    User findByEmail(String email);
+public interface UserRepository extends JpaRepository<UserAccount, Long> {
+    UserAccount findByEmail(String email);
 }

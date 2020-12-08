@@ -1,6 +1,6 @@
 package com.michal.weighttrackerapp.service;
 
-import com.michal.weighttrackerapp.domain.User;
+import com.michal.weighttrackerapp.domain.UserAccount;
 import com.michal.weighttrackerapp.domain.WeightMeasure;
 import com.michal.weighttrackerapp.repository.WeightMeasureRepository;
 import org.slf4j.Logger;
@@ -20,11 +20,8 @@ public class WeightMeasureService {
     @Autowired
     WeightMeasureRepository weightMeasureRepository;
 
-    public List<WeightMeasure> getAllMeasuresForUser (User user){
-        return weightMeasureRepository.findAllByUser(user);
-    }
 
-    public WeightMeasure getMeasure (int id){
+    public WeightMeasure getMeasure (long id){
         Optional<WeightMeasure> weightMeasure = weightMeasureRepository.findById(id);
         if (weightMeasure.isPresent()){
             return weightMeasure.get();
@@ -37,7 +34,7 @@ public class WeightMeasureService {
         return weightMeasureRepository.save(weightMeasure);
     }
 
-    public void deleteMeasure(final int id){
+    public void deleteMeasure(final long id){
         weightMeasureRepository.deleteById(id);
     }
 

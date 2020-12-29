@@ -41,4 +41,8 @@ public class WeightMeasureService {
     public WeightMeasure updateMeasure(WeightMeasure weightMeasure){
         return weightMeasureRepository.save(weightMeasure);
     }
+
+    public List<WeightMeasure> getAllWeights(){
+        return weightMeasureRepository.findAll();
+    }
 }

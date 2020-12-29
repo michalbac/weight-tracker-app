@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -16,7 +17,6 @@ public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_accounts_seq")
     @SequenceGenerator(name = "user_accounts_seq", sequenceName = "user_accounts_seq", allocationSize = 1)
-    @Column(name = "user_id")
     private long userId;
 
     @Column(name = "username")
@@ -24,5 +24,9 @@ public class UserAccount {
     private String email;
     private String password;
     private boolean enabled = true;
+    @OneToMany(targetEntity = BodyMeasure.class, mappedBy = "user")
+    private List<BodyMeasure> bodyMeasures;
+    @OneToMany(targetEntity = WeightMeasure.class, mappedBy = "user")
+    private  List<WeightMeasure> weightMeasures;
 
 }

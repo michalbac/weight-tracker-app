@@ -19,4 +19,7 @@ public class WeightMeasure {
     @NotNull(message = "Date cannot be empty")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfMeasure;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserAccount user;
 }

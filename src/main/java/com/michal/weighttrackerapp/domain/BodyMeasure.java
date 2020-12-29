@@ -3,7 +3,6 @@ package com.michal.weighttrackerapp.domain;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -24,4 +23,7 @@ public class BodyMeasure {
     @NotNull(message = "Date cannot be empty")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfMeasure;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserAccount user;
 }

@@ -23,9 +23,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .usersByUsernameQuery("select username, password, enabled " +
-                        "from user_accounts where username = ?")
+                        "from user_account where username = ?")
                 .authoritiesByUsernameQuery("select username, role " +
-                        "from user_accounts where username = ?")
+                        "from user_account where username = ?")
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
@@ -33,6 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/weights", "/weights/**").authenticated()
+                .antMatchers("/body", "/body/**").authenticated()
                 .antMatchers("/", "/**").permitAll()
                 .and().formLogin();
 

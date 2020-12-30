@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
-<nav th:replace="layouts::navbar"></nav>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layouts :: header"></head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
 <h2>Start page</h2>
+<div sec:authorize="isAuthenticated()">
+    Authenticated as <span sec:authentication="name"></span></div>
+</body>
+</html>

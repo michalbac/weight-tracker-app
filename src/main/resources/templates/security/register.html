@@ -1,42 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
 <head>
     <title>Registration Form</title>
     <!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="background-color: #ededed;">
-<div style="background-color: #337ab7; height: 50px;"></div>
-<div class="container-fluid" style="margin-top: 30px;">
+<body style="background-color: #ededed;" th:style="'background-image:url(' + @{/img/background2.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">
 
-    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
-        <form autocomplete="off" th:action="@{/register/save}" th:object="${userAccount}" method="post" class="form-signin" role="form">
-            <h3 class="form-signin-heading">Registration Form</h3>
-            <div class="form-group">
-                <div class="">
-                    <input type="text" th:field="*{userName}" placeholder="User Name" class="form-control" />
+<body class="align">
+<div layout:fragment="content" th:remove="tag">
+
+    <div class="grid">
+        <div class="col-md-6 col-md-offset-3">
+            <h1 class="login">Register User</h1>
+            <form autocomplete="off" th:action="@{/register/save}" th:object="${userAccount}" method="post" class="form login">
+
+                <br/>
+
+                <div class="form__field">
+                    <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
+                    <input id="login__username" type="text" name="username" class="form__input" th:field="*{userName}" placeholder="User Name" required>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control" />
+
+                <div class="form__field">
+                    <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Email</span></label>
+                    <input id="login__email" type="text" class="form__input" name="Email"  th:field="*{email}" placeholder="Email" required>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" />
+
+                <div class="form__field">
+                    <label for="login__password"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
+                    <input id="login__password" type="password" class="form__input" name="password"  th:field="*{password}" placeholder="Password" required>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <button type="submit" class="btn btn-primary btn-block">Register User</button>
+
+                <div class="text--center">
+                    <label id="login__checkbox_label" for="login__checkbox">remember me?</label>
+                    <input id="login__checkbox" type="checkbox" name="remember-me" />
                 </div>
-            </div>
-            <!-- <span th:utext="${successMessage}"></span> -->
-        </form>
+
+                       <div class="form__field">
+                    <input type="submit" value="Register User">
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <p><a href="/" th:href="@{/}">Back to home page</a></p>
+<!--<div class="container-fluid" style="margin-top: 30px;">-->
+
+<!--    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">-->
+<!--        <form autocomplete="off" th:action="@{/register/save}" th:object="${userAccount}" method="post" class="form-signin" role="form">-->
+<!--            <h3 class="form-signin-heading">Registration Form</h3>-->
+<!--            <div class="form-group">-->
+<!--                <div class="">-->
+<!--                    <input type="text" th:field="*{userName}" placeholder="User Name" class="form-control" />-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <div class="">-->
+<!--                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control" />-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <div class="">-->
+<!--                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" />-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <div class="">-->
+<!--                    <button type="submit" class="btn btn-primary btn-block">Register User</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <p><a href="/" th:href="@{/}">Back to home page</a></p>-->
+<!--            &lt;!&ndash; <span th:utext="${successMessage}"></span> &ndash;&gt;-->
+<!--&lt;!&ndash;        </form>&ndash;&gt;-->
     </div>
 </div>
+</body>
 </body>
 </html>

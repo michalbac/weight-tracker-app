@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,11 +28,17 @@ public class WeightMeasureController {
     @GetMapping
     public String getMeasures(Model model, Authentication authentication){
         String username = authentication.getName();
-        Long id = userRepository.findByUsername(username).getId();
+        Long id = userRepository.findByUserName(username).getId();
         List<WeightMeasure> measureList = weightMeasureService.getAllUserWeights(id);
         model.addAttribute("measureList", measureList);
-        return"";
+        return"weight/weights_page";
 
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam long id){
+        weightMeasureService.deleteMeasure(id);
+        return "redirect:/weights";
     }
 
 }

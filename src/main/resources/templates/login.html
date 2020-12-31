@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body th:style="'background-image:url(' + @{/img/background2.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">
+<body class="align">
+<div layout:fragment="content" th:remove="tag">
+
+    <div class="grid">
+        <div class="col-md-6 col-md-offset-3">
+            <h1 class="login">Login page</h1>
+            <form th:action="@{/login}" method="post" class="form login">
+
+                <br/>
+
+                <div class="form__field">
+                    <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
+                    <input id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
+                </div>
+
+                <div class="form__field">
+                    <label for="login__password"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
+                    <input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
+                </div>
+
+                <div class="text--center">
+                    <label id="login__checkbox_label" for="login__checkbox">remember me?</label>
+                    <input id="login__checkbox" type="checkbox" name="remember-me" />
+                </div>
+
+                <div class="text--center" th:if="${param.error}">
+                    Invalid username and password.
+                </div>
+                <div class="text--center" th:if="${param.logout}">
+                    You have been logged out.
+                </div>
+
+                <div class="form__field">
+                    <input type="submit" value="Sign In">
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <p><a href="/" th:href="@{/}">Back to home page</a></p>
+
+</div>
+</body>
+</body>
+</html>

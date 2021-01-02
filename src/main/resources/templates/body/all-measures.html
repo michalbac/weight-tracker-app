@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header"></head>
+
+<body th:style="'background-image:url(' + @{/img/background2.jpg} + '); background-repeat: no-repeat, repeat;  background-size: 100%; background-position: top;'">
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3 style="color: #fff">Body Measures</h3>
+    <a th:href="@{/body/new}"
+       class="btn btn-primary btn-sm mb-3">
+        New Body Measure
+    </a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th> Date </th>
+            <th> Right Bicep </th>
+            <th> Left Bicep </th>
+            <th> Waist </th>
+            <th> Chest </th>
+            <th> Left Thigh </th>
+            <th> Right Thigh </th>
+
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  style="color: #fff" th:each="measure:${measures}">
+            <td  th:text="${#dates.format(measure.dateOfMeasure, 'dd MMMM yyyy')}"></td>
+            <td th:text="${measure.rightBicep}"></td>
+            <td th:text="${measure.leftBicep}"></td>
+            <td th:text="${measure.waist}"></td>
+            <td th:text="${measure.chest}"></td>
+            <td th:text="${measure.leftThigh}"></td>
+            <td th:text="${measure.rightThigh}"></td>
+            <td>
+                <a th:href="@{/body/update(id=${measure.id})}" class="btn btn-info btn-sm">Edit</a>
+                <a th:href="@{/body/delete(id=${measure.id})}" class="btn btn-danger btn-sm" onclick="if(!(confirm('Are you sure you want to delete this measure?'))) return false">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

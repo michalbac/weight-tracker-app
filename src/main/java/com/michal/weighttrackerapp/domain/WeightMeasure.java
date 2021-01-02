@@ -1,7 +1,6 @@
 package com.michal.weighttrackerapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +17,7 @@ public class WeightMeasure {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "weight_measure_seq")
     @SequenceGenerator(name = "weight_measure_seq", sequenceName = "weight_measure_seq", allocationSize = 1)
     private long id;
+    @NotNull(message = "Weight cannot be empty")
     private double weight;
     @NotNull(message = "Date cannot be empty")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

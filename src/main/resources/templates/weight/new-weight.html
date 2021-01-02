@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+
+<head th:replace="layouts :: header">
+</head>
+
+<body th:style="'background-image:url(' + @{/img/background2.jpg} + '); background-repeat: no-repeat, repeat;  background-size: 100%; background-position: top;'">
+<nav th:replace="layouts :: navbar"></nav>
+<div class="container">
+    <form th:action="@{/weights/save}" th:object="${weight}" method="post">
+        <br>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="weight" style="color: #fff">Weight</label>
+                <input type="text" class="form-control" id="weight" placeholder="Weight" th:field="${weight.weight}">
+                <span style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="${weight.weight}"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="db4" style="color: #fff">Measure date: </label>
+                <input id="db4" type="text"  class="from-control" value="Measure Date" placeholder="Select measure date" th:field="${weight.dateOfMeasure}">
+                <span style="color:red" th:if="${#fields.hasErrors('dateOfMeasure')}" th:errors="${weight.dateOfMeasure}"></span>
+            </div>
+            <script>
+                $( "#db4" ).datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    todayHighlight: true
+                });
+            </script>
+            <style>
+                .ui-datepicker.ui-datepicker-inline {
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+            </style>
+            <div class="form-group col-md-2">
+                <br>
+            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

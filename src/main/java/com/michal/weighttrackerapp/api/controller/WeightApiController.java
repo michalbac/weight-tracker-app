@@ -1,6 +1,5 @@
 package com.michal.weighttrackerapp.api.controller;
 
-import com.michal.weighttrackerapp.domain.UserAccount;
 import com.michal.weighttrackerapp.domain.WeightMeasure;
 import com.michal.weighttrackerapp.repository.UserRepository;
 import com.michal.weighttrackerapp.service.WeightMeasureService;
@@ -8,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/weights")

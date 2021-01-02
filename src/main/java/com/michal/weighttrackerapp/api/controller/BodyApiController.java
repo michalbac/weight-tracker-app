@@ -1,7 +1,6 @@
 package com.michal.weighttrackerapp.api.controller;
 
 import com.michal.weighttrackerapp.domain.BodyMeasure;
-import com.michal.weighttrackerapp.domain.UserAccount;
 import com.michal.weighttrackerapp.repository.UserRepository;
 import com.michal.weighttrackerapp.service.BodyMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;

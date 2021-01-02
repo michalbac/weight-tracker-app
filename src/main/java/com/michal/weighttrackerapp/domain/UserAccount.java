@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,6 +22,7 @@ public class UserAccount {
     private long id;
 
     @Column(name = "username")
+    @UniqueElements
     private String userName;
     private String email;
     private String password;

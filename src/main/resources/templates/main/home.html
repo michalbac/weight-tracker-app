@@ -5,6 +5,16 @@
 <head th:replace="layouts :: header"></head>
 <body th:style="'background-image:url(' + @{/img/background2.jpg} + '); background-repeat: no-repeat, repeat;  background-size: 100%; background-position: top;'">
 <nav th:replace="layouts :: navbar"></nav>
-
+<div align="center">
+    <br>
+<h4 style="color: #fff">Main dashboard</h4>
+<div class="col-md-4" sec:authorize="isAuthenticated()">
+    <div id="myWeightChart" style="width: 700px; height: 400px"></div>
+    <script>
+        var chartData = "[[${measureList}]]"
+    </script>
+</div>
+</div>
+<script type="text/javascript" th:src="@{js/weightChart.js}"></script>
 </body>
 </html>

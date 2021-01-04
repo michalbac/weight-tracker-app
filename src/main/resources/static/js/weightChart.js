@@ -11,27 +11,59 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
     var data = new google.visualization.DataTable();
-    data.addColumn('number', 'Weight');
+
     data.addColumn('date', 'Date of Measure');
+    data.addColumn('number', 'Weight');
 
     for (var i = 0; i < resultArray.length; i++) {
         data.addRows([
-            [resultArray[i][1]["weight"],
-                new Date(resultArray[i][1]["dateOfMeasure"])]
+            [new Date(resultArray[i][1]["dateOfMeasure"]),
+                resultArray[i][1]["weight"]]
         ]);
     }
 
 
     var options = {
-        backgroundColor: '#000',
-        chartArea:{
-            backgroundColor: '#FFF'
+        backgroundColor: {
+            fill:'transparent'
         },
+        chartArea:{
+            backgroundColor: '#000'
+        },
+        title: 'Weight chart',
+        titleTextStyle:{
+            color: '#FFF',
+            fontSize: '20',
+        },
+        legend: {
+            textStyle: {
+                color: '#FFF',
+                fontSize: '15',
+            }
+        },
+
         chart:{
             title: 'Weight',
             curveType: 'function',
-            legend: { position: 'bottom' }
+            legend: {
+                position: 'bottom' }
         },
+        axisTitlesPosition:'out',
+        series: [
+            {color: '#d8db12', visibleInLegend: true}],
+        hAxis:{
+            format: 'MMM yyyy',
+            textStyle: {
+                color: '#1f9acf',
+                bold: true,
+            },
+        },
+        vAxis:{
+            textStyle: {
+                color: '#1f9acf',
+                bold: true,
+            }
+        }
 
     };
 

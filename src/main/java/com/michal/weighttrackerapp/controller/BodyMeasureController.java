@@ -4,6 +4,7 @@ import com.michal.weighttrackerapp.domain.BodyMeasure;
 import com.michal.weighttrackerapp.domain.UserAccount;
 import com.michal.weighttrackerapp.repository.UserRepository;
 import com.michal.weighttrackerapp.service.BodyMeasureService;
+import com.michal.weighttrackerapp.utils.BodyMeasureComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -47,6 +49,7 @@ public class BodyMeasureController {
         String userName = authentication.getName();
         Long id = userRepository.findByUserName(userName).getId();
         List<BodyMeasure> bodyMeasures = bodyMeasureService.getAllUserBodyMeasures(id);
+        Collections.sort(bodyMeasures, new BodyMeasureComparator());
         model.addAttribute("measures", bodyMeasures);
         return "body/all-measures";
     }

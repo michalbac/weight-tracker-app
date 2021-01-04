@@ -4,6 +4,7 @@ import com.michal.weighttrackerapp.domain.UserAccount;
 import com.michal.weighttrackerapp.domain.WeightMeasure;
 import com.michal.weighttrackerapp.repository.UserRepository;
 import com.michal.weighttrackerapp.service.WeightMeasureService;
+import com.michal.weighttrackerapp.utils.WeightComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -48,6 +50,7 @@ public class WeightMeasureController {
         String username = authentication.getName();
         Long id = userRepository.findByUserName(username).getId();
         List<WeightMeasure> measureList = weightMeasureService.getAllUserWeights(id);
+        Collections.sort(measureList, new WeightComparator());
         model.addAttribute("measureList", measureList);
         return"weight/weights_page";
 

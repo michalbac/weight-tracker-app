@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.List;
 
 
@@ -24,6 +25,7 @@ public class UserAccount {
     @Column(name = "username")
     @UniqueElements
     private String userName;
+    @Email
     private String email;
     private String password;
     private boolean enabled = true;

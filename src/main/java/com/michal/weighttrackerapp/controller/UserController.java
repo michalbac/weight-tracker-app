@@ -1,7 +1,9 @@
 package com.michal.weighttrackerapp.controller;
 
+import com.michal.weighttrackerapp.domain.Mail;
 import com.michal.weighttrackerapp.domain.UserAccount;
 import com.michal.weighttrackerapp.repository.UserRepository;
+import com.michal.weighttrackerapp.service.SimpleEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    SimpleEmailService simpleEmailService;
+
 
     @GetMapping(value = "/register")
     public String registerUser(Model model){
@@ -31,6 +36,7 @@ public class UserController {
     public String saveUser (Model model, UserAccount userAccount){
         userAccount.setPassword((bCryptPasswordEncoder.encode(userAccount.getPassword())));
         userRepository.save(userAccount);
+        simpleEmailService.sendUserRegistration(new Mail(userAccount.getEmail(),simpleEmailService.MAIL_SUBJECT, simpleEmailService.MAIL_MESSAGE, null ));
         return "redirect:/";
     }
 

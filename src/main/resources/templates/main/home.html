@@ -9,14 +9,29 @@
     <br>
 <h4 style="color: #fff">Main dashboard</h4>
 <div sec:authorize="isAuthenticated()">
-    <div id="myWeightChart" style="width: 900px; height: 500px"></div>
+
+    <div th:if="${measureList.isEmpty()}">
+        <br>
+        <h5 style="color: #fff">You dont have any measures</h5>
+        <h6 style="color: #fff">To see weight and body charts please fill the data</h6>
+        <br>
+        <a th:href="@{/weights/new}"
+           class="btn btn-primary btn-sm mb-3">
+            New Weight Measure
+        </a>
+        <a th:href="@{/body/new}"
+           class="btn btn-primary btn-sm mb-3">
+            New Body Measure
+        </a>
+    </div>
+    <div id="myWeightChart" style="width: 900px; height: 500px" th:if="${!measureList.isEmpty()}"></div>
     <script>
         var chartData = "[[${measureList}]]"
     </script>
-    <div id="myBicepChart" style="width: 900px; height: 500px"></div>
-    <div id="myThighChart" style="width: 900px; height: 500px"></div>
-    <div id="myChestChart" style="width: 900px; height: 500px"></div>
-    <div id="myWaistChart" style="width: 900px; height: 500px"></div>
+    <div id="myBicepChart" style="width: 900px; height: 500px" th:if="${!bodyMeasures.isEmpty()}"></div>
+    <div id="myThighChart" style="width: 900px; height: 500px" th:if="${!bodyMeasures.isEmpty()}"></div>
+    <div id="myChestChart" style="width: 900px; height: 500px" th:if="${!bodyMeasures.isEmpty()}"></div>
+    <div id="myWaistChart" style="width: 900px; height: 500px" th:if="${!bodyMeasures.isEmpty()}"></div>
     <script>
         var chart2Data = "[[${bodyMeasures}]]"
     </script>

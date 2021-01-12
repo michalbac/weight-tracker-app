@@ -38,12 +38,21 @@ public class HomeController {
             Collections.sort(measureList, new WeightComparator());
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonWeightString = objectMapper.writeValueAsString(measureList);
-            model.addAttribute("measureList", jsonWeightString);
+            if(measureList==null || measureList.isEmpty()){
+                model.addAttribute("measureList", measureList);
+            } else {
+                model.addAttribute("measureList", jsonWeightString);
+            }
 
             List<BodyMeasure> bodyMeasures = bodyMeasureService.getAllUserBodyMeasures(id);
             Collections.sort(bodyMeasures, new BodyMeasureComparator());
             String jsonBodyString = objectMapper.writeValueAsString(bodyMeasures);
             model.addAttribute("bodyMeasures", jsonBodyString);
+            if(measureList==null || measureList.isEmpty()){
+                model.addAttribute("bodyMeasures", bodyMeasures);
+            } else {
+                model.addAttribute("bodyMeasures", jsonBodyString);
+            }
         }
             return"main/home";
         }

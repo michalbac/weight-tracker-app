@@ -35,8 +35,7 @@ public class WeightMeasureController {
     @PostMapping("/save")
     public String create (@ModelAttribute("weight") @Valid WeightMeasure weightMeasure, Errors errors, Model model, Authentication authentication){
         String name = authentication.getName();
-        String username = name;
-        UserAccount userAccount = userRepository.findByUserName(username);
+        UserAccount userAccount = userRepository.findByUserName(name);
         if(errors.hasErrors()){
             return "weight/new-weight";
         }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layouts :: header"></head>
+<body th:style="'background-image:url(' + @{/img/background2.jpg} + '); background-repeat: no-repeat, repeat; background-attachment: fixed; background-size: 100%; background-position: top;'">
+<nav th:replace="layouts :: navbar"></nav>
+<div align="center">
+    <br>
+<h4 style="color: #fff">Main Admin dashboard</h4>
+    <br>
+        <div class="container">
+            <h3 style="color: #fff">Users</h3>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th> Users Count </th>
+                    <th> Body Measures Count </th>
+                    <th> Weight Measures Count </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  style="color: #fff">
+                    <td  th:text="${usersCount}"></td>
+                    <td  th:text="${bodySize}"></td>
+                    <td  th:text="${weightSize}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+
+</body>
+</html>

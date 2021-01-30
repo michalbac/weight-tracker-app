@@ -44,6 +44,7 @@ public class BodyMeasureController {
         bodyMeasureService.addMeasure(bodyMeasure);
         return "redirect:/body";
     }
+
     @GetMapping
     public String getMeasures(Model model, Authentication authentication){
         String userName = authentication.getName();
@@ -53,6 +54,7 @@ public class BodyMeasureController {
         model.addAttribute("measures", bodyMeasures);
         return "body/all-measures";
     }
+
     @DeleteMapping("{id}")
     public String delete(@PathVariable long id){
         bodyMeasureService.deleteMeasure(id);

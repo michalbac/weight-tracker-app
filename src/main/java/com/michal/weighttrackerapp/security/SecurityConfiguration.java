@@ -26,6 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "from user_account where username = ?")
                 .authoritiesByUsernameQuery("select username, role " +
                         "from user_account where username = ?")
+                .rolePrefix("ROLE_")
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }

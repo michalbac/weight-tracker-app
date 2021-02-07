@@ -2,7 +2,9 @@ package com.michal.weighttrackerapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
@@ -12,6 +14,8 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BodyMeasure {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "body_measure_seq")

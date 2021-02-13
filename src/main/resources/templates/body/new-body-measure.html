@@ -10,7 +10,7 @@
 <body th:style="'background-image:url(' + @{/img/background2.jpg} + '); background-repeat: no-repeat, repeat; background-attachment: fixed; background-size: 100%; background-position: top;'">
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
-    <form th:action="@{/body/save}" th:object="${body}" method="post">
+    <form th:action="@{/body/save}" th:object="${body}" method="post" id="form">
         <br>
         <div class="form-row">
             <div class="form-group col-md-3">
@@ -61,7 +61,7 @@
             </script>
             <div class="form-group col-md-2">
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                <button name="submit" type="submit" class="btn btn-primary btn-lg">Save</button>
             </div>
     </form>
 </div>

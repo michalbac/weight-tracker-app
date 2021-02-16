@@ -1,46 +1,45 @@
 package com.michal.weighttrackerapp.controller;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
-import com.gargoylesoftware.htmlunit.html.*;
-import com.gargoylesoftware.htmlunit.util.NameValuePair;
+import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.michal.weighttrackerapp.domain.BodyMeasure;
 import com.michal.weighttrackerapp.domain.UserAccount;
 import com.michal.weighttrackerapp.repository.UserRepository;
 import com.michal.weighttrackerapp.service.BodyMeasureService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
 import org.springframework.web.context.WebApplicationContext;
-
-
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(value = BodyMeasureController.class)
 @ActiveProfiles(value = "test")
 public class BodyMeasureControllerTest {
@@ -133,59 +132,65 @@ public class BodyMeasureControllerTest {
         rtInput.setValueAttribute("60");
         HtmlTextInput dateInput = page.getHtmlElementById("db4");
         dateInput.setValueAttribute("2021-02-13");
-        HtmlButton submit = form.getButtonByName("submit");
+
 
         //When & Then
-        WebResponse repsonse = submit.click().getWebResponse();
-        assertThat(repsonse.getStatusCode()).isEqualTo(200);
-        System.out.println(repsonse.getContentAsString());
+        HtmlButton submit = form.getButtonByName("submit");
+        WebResponse response = submit.click().getWebResponse();
+        assertThat(response.getStatusCode()).isEqualTo(200);
+        assertThat(page.getForms().get(0).getInputByName("leftBicep").getValueAttribute()).isEqualTo("30");
+        assertThat(page.getForms().get(0).getInputByName("rightBicep").getValueAttribute()).isEqualTo("30");
+        assertThat(page.getForms().get(0).getInputByName("waist").getValueAttribute()).isEqualTo("90");
+        assertThat(page.getForms().get(0).getInputByName("chest").getValueAttribute()).isEqualTo("100");
+        assertThat(page.getForms().get(0).getInputByName("leftThigh").getValueAttribute()).isEqualTo("60");
+        assertThat(page.getForms().get(0).getInputByName("rightThigh").getValueAttribute()).isEqualTo("60");
+        assertThat(page.getForms().get(0).getInputByName("dateOfMeasure").getValueAttribute()).isEqualTo("2021-02-13");
+    }
+
+    @Test
+    @WithMockUser(username = "test", password = "pwd", roles = "USER")
+    public void shouldReturn400() throws Exception {
+        //Given
+        UserAccount user = new UserAccount();
+        user.setId(1);
+        user.setEmail("test@com.pl");
+        user.setUserName("test");
+        when(userRepository.findByUserName(any())).thenReturn(user);
+        HtmlPage page = webClient.getPage("http://localhost:8080/body/new");
+        HtmlForm form = page.getHtmlElementById("form");
+        HtmlTextInput rbInput = page.getHtmlElementById("rightBicep");
+        rbInput.setValueAttribute("30");
+        HtmlTextInput lbInput = page.getHtmlElementById("leftBicep");
+        lbInput.setValueAttribute("30");
+        HtmlTextInput waistInput = page.getHtmlElementById("waist");
+        waistInput.setValueAttribute("90");
+        HtmlTextInput chestInput = page.getHtmlElementById("chest");
+        chestInput.setValueAttribute("100");
+        HtmlTextInput ltInput = page.getHtmlElementById("leftThigh");
+        ltInput.setValueAttribute("60");
 
 
+        //When & Then
+        HtmlButton submit = form.getButtonByName("submit");
+        try {
+            submit.click().getWebResponse();
+        } catch (FailingHttpStatusCodeException e){
+            assertTrue(e.getStatusCode()==400);
+        }
 
-
-
-//        UserAccount user = new UserAccount();
-//        user.setId(1);
-//        user.setEmail("test@com.pl");
-//        user.setUserName("test");
-//        Date date = new Date(System.currentTimeMillis());
-//        BodyMeasure bm1 = new BodyMeasure(1, 30, 30, 90, 100,
-//                60, 60, date, user);
-//        when(userRepository.findByUserName(any())).thenReturn(user);
-//
-//        //When & Then
-//        String rbParamName = "rightBicep";
-//        String lbParamName = "leftBicep";
-//        String waistParamName = "waist";
-//        String chestParamName = "chest";
-//        String ltParamName = "leftThigh";
-//        String rtParamName = "rightThigh";
-//        String db4ParamName = "db4";
-//
-//        mockMvc.perform(get("/body/new"))
-//                .andExpect(xpath("//input[@name='" + rbParamName + "']").exists())
-//                .andExpect(xpath("//input[@name='" + lbParamName + "']").exists())
-//                .andExpect(xpath("//input[@name='" + waistParamName + "']").exists())
-//                .andExpect(xpath("//input[@name='" + chestParamName + "']").exists())
-//                .andExpect(xpath("//input[@name='" + ltParamName + "']").exists())
-//                .andExpect(xpath("//input[@name='" + rtParamName + "']").exists())
-//                .andExpect(xpath("//input[@name='" + db4ParamName + "']").exists());
-
-
-
-//        MockHttpServletRequestBuilder createMeasure = post("/body/save")
-//                .characterEncoding("UTF-8")
-//                .param("rightBicep", "30")
-//                .param("leftBicep", "30")
-//                .param("waist", "90")
-//                .param("chest", "100")
-//                .param("leftThigh", "60")
-//                .param("rightThigh", "60")
-//                .param("db4", String.valueOf(date));
-//
-//        mockMvc.perform(createMeasure)
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/body"));
 
     }
+
+    @Test
+    @WithMockUser(username = "test", password = "pwd", roles = "USER")
+    public void shouldDeleteUser() throws Exception {
+        //Given When & Then
+        mockMvc.perform(get("/body/1"))
+                .andExpect(redirectedUrl("/body"));
+        verify(bodyMeasureService, times(1)).deleteMeasure(1);
+
+
+
+    }
+
 }

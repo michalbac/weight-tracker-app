@@ -55,7 +55,7 @@ public class BodyMeasureController {
         return "body/all-measures";
     }
 
-    @DeleteMapping("{id}")
+    @GetMapping("{id}")
     public String delete(@PathVariable long id){
         bodyMeasureService.deleteMeasure(id);
         return "redirect:/body";
